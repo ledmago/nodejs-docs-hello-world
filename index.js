@@ -1,11 +1,17 @@
-const http = require('http');
 
-const server = http.createServer((request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
-});
 
-const port = process.env.PORT || 1337;
-server.listen(port);
+const express = require('express');
+const connectDB = require('./Db/Connection');
+const app = express();
 
-console.log("Server running at http://localhost:%d", port);
+var jwt = require('jsonwebtoken');
+var privateKey = 'ledmagoDevelopmentServerPrivateKey';
+
+var token = jwt.sign({ foo: 'bar' }, privateKey);
+
+connectDB();
+app.use(express.json({ extended: false }));
+app.use('/api/userModel', require('./Api/User'));
+const Port = process.env.Port || 1337;
+
+app.listen(Port, () => console.log('Server started'));
