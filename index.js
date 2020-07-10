@@ -11,6 +11,7 @@ var token = jwt.sign({ foo: 'bar' }, privateKey);
 
 connectDB();
 app.use(express.json({ extended: false }));
+app.get('/',(req,res)=>{res.send('okey')})
 app.use('/api/userModel', require('./Api/User'));
 const Port = process.env.Port || 1337;
 
